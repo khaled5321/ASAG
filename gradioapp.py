@@ -31,6 +31,22 @@ demo = gr.Interface(
         gr.Textbox(lines=2, placeholder="Model answer here"), 
         gr.Textbox(lines=2, placeholder="Student answer here")
         ], 
-    outputs="text")
+    outputs="text",
+    title="Grading short answer questions",
+    examples=[
+        [
+            "To simulate the behaviour of portions of the desired software product", 
+            "a prototype is used to simulate the behaviour of a portion of the desired software product"
+        ],
+        [
+            "A location in memory that can store a value", 
+            "I do not know"
+        ],
+        [
+            "CPU. Memory. Input and output devices", 
+            "CPU and Memory"
+        ],
+    ],
+)
 
 demo.launch() 
