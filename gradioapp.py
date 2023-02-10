@@ -10,7 +10,7 @@ labels = {
 }
 
 print('currently loading model')
-model = AutoModelForSequenceClassification.from_pretrained("./model")
+model = AutoModelForSequenceClassification.from_pretrained("./95_8")
 tokenizer = AutoTokenizer.from_pretrained("./tokenizer")
 print('model loaded successfully')
 
@@ -35,16 +35,16 @@ demo = gr.Interface(
     title="Grading short answer questions",
     examples=[
         [
-            "To simulate the behaviour of portions of the desired software product", 
-            "a prototype is used to simulate the behaviour of a portion of the desired software product"
+            "A prototype is used to simulate the behavior of portions of the desired software product", 
+            "a prototype is used to simulate the behavior of a portion of the desired software product"
         ],
         [
-            "A location in memory that can store a value", 
-            "I do not know"
+            "A variable in programming  is a location in memory that can be used  to store a value", 
+            "no answer"
         ],
         [
-            "CPU. Memory. Input and output devices", 
-            "CPU and Memory"
+            "A computer system consists of a CPU, Memory, Input, and output devices.", 
+            "a CPU only"
         ],
     ],
 )
