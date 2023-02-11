@@ -1,4 +1,5 @@
 import gradio as gr
+import numpy as np
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
@@ -19,19 +20,19 @@ def grade(model_answer, student_answer):
 
     with torch.no_grad():
         logits = model(**inputs).logits
-        predicted_class_id = logits.argmax().item()
-        # model.config.id2label[predicted_class_id]
-        grade = labels[predicted_class_id]
-
-    return grade
+    
+    preds = torch.nn.functional.softmax(logits, dim=1)
+    preds = np.concatenate(preds.numpy()).ravel().tolist()
+    print(preds)
+    return {l:p for p, l in zip(preds, labels.values())}
 
 demo = gr.Interface(
     fn=grade, 
     inputs=[
         gr.Textbox(lines=2, placeholder="Model answer here"), 
         gr.Textbox(lines=2, placeholder="Student answer here")
-        ], 
-    outputs="text",
+    ], 
+    outputs="label",
     title="Grading short answer questions",
     examples=[
         [
@@ -39,7 +40,7 @@ demo = gr.Interface(
             "a prototype is used to simulate the behavior of a portion of the desired software product"
         ],
         [
-            "A variable in programming  is a location in memory that can be used  to store a value", 
+            "A variable in programming is a location in memory that can be used  to store a value", 
             "no answer"
         ],
         [
